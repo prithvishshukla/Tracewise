@@ -6,8 +6,13 @@ import { impactClass, type FindingStatus, type Severity } from '@tracewise/share
 import { SEVERITY_CLASS, SEVERITY_LABEL, STATUS_CLASS, STATUS_LABEL, pct } from '@/lib/format';
 
 export function Card({ children, className }: { children: ReactNode; className?: string }) {
-  return <section className={clsx('rounded-xl border border-line bg-surface', className)}>{children}</section>;
+  return (
+    <section className={clsx('rounded-xl border border-line bg-card', className)}>
+      {children}
+    </section>
+  );
 }
+
 export function CardHeader({ title, action, subtitle }: { title: string; action?: ReactNode; subtitle?: string }) {
   return (
     <div className="flex items-start justify-between gap-3 border-b border-line px-5 py-3.5">
@@ -56,7 +61,7 @@ export function ImpactBadge({ confidence }: { confidence: number }) {
   const verified = impactClass(confidence) === 'verified';
   return (
     <Badge
-      className={verified ? 'bg-emerald-500/10 text-emerald-300 ring-emerald-400/30' : 'bg-amber-400/10 text-amber-200 ring-amber-300/30'}
+      className={verified ? 'bg-success/15 text-success ring-success/30' : 'bg-warning/15 text-warning ring-warning/30'}
       title={
         verified
           ? 'Static analysis found concrete evidence that the changed API is used here.'
@@ -71,7 +76,7 @@ export function ImpactBadge({ confidence }: { confidence: number }) {
 export function DemoBadge({ label = 'DEMO DATA' }: { label?: string }) {
   return (
     <Badge
-      className="bg-violet-500/15 text-violet-300 ring-violet-400/40"
+      className="bg-warning/15 text-warning ring-warning/40"
       title="Simulated data seeded for demonstration. Not retrieved from a real provider."
     >
       <FlaskConical className="h-3 w-3" aria-hidden /> {label}
@@ -80,7 +85,7 @@ export function DemoBadge({ label = 'DEMO DATA' }: { label?: string }) {
 }
 
 export function ConfidenceMeter({ value }: { value: number }) {
-  const color = value >= 0.85 ? 'bg-emerald-400' : value >= 0.6 ? 'bg-amber-300' : 'bg-orange-400';
+  const color = value >= 0.85 ? 'bg-success' : value >= 0.6 ? 'bg-warning' : 'bg-error';
   return (
     <div className="flex items-center gap-2" role="img" aria-label={`Confidence ${pct(value)}`}>
       <div className="h-1.5 w-20 overflow-hidden rounded-full bg-line">
@@ -105,10 +110,10 @@ export function Stat({
   tone?: 'danger';
 }) {
   const body = (
-    <div className={clsx('rounded-xl border border-line bg-surface p-4 transition-colors', href && 'hover:border-accent/60')}>
+    <div className={clsx('rounded-xl border border-line bg-card p-4 transition-colors', href && 'hover:border-accentHover')}>
       <p className="text-xs font-medium uppercase tracking-wide text-muted">{label}</p>
       <p
-        className={clsx('mt-1.5 text-3xl font-semibold tabular-nums', tone === 'danger' && Number(value) > 0 ? 'text-red-300' : 'text-fg')}
+        className={clsx('mt-1.5 text-3xl font-semibold tabular-nums', tone === 'danger' && Number(value) > 0 ? 'text-error' : 'text-fg')}
       >
         {value}
       </p>
@@ -137,11 +142,11 @@ export function EmptyState({ title, description, action }: { title: string; desc
 
 export function ErrorState({ title = 'Something went wrong', message, action }: { title?: string; message: string; action?: ReactNode }) {
   return (
-    <div role="alert" className="flex items-start gap-3 rounded-xl border border-red-400/40 bg-red-500/10 p-4">
-      <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-red-300" aria-hidden />
+    <div role="alert" className="flex items-start gap-3 rounded-xl border border-error/40 bg-error/10 p-4">
+      <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-error" aria-hidden />
       <div className="text-sm">
-        <p className="font-medium text-red-200">{title}</p>
-        <p className="mt-0.5 text-red-200/80">{message}</p>
+        <p className="font-medium text-error">{title}</p>
+        <p className="mt-0.5 text-error/80">{message}</p>
         {action && <div className="mt-3">{action}</div>}
       </div>
     </div>
@@ -151,8 +156,8 @@ export function ErrorState({ title = 'Something went wrong', message, action }: 
 export const buttonClass = (variant: 'primary' | 'secondary' | 'ghost' = 'secondary') =>
   clsx(
     'inline-flex items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50',
-    variant === 'primary' && 'bg-accent text-white hover:bg-blue-500',
-    variant === 'secondary' && 'border border-line bg-raised text-fg hover:border-accent/60',
+    variant === 'primary' && 'bg-accent text-bg hover:bg-accentHover',
+    variant === 'secondary' && 'border border-line bg-card text-fg hover:border-accentHover',
     variant === 'ghost' && 'text-muted hover:text-fg',
   );
 
