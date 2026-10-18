@@ -1,0 +1,18 @@
+{
+  "description": "Ground truth for the demo scenario. Used by tests/demo-e2e.test.ts and BENCHMARKS.md.",
+  "expected": [
+    { "event": "stripe-charges-create-removal", "file": "src/payments.ts", "matchKind": "exact_symbol", "impact": "verified" },
+    { "event": "stripe-post-charges-deprecation", "file": "src/legacy.py", "matchKind": "known_endpoint", "impact": "verified" },
+    { "event": "openai-python-chatcompletion-removal", "file": "src/legacy.py", "matchKind": "exact_symbol", "impact": "verified" },
+    { "event": "openai-python-pre-v1-support-end", "file": "requirements.txt", "matchKind": "package_version", "impact": "possible" },
+    { "event": "twilio-messages-feedback-param-deprecation", "file": "src/notify.ts", "matchKind": "known_endpoint", "impact": "verified" },
+    { "event": "stripe-charges-create-removal", "file": "src/dynamic.ts", "matchKind": "dynamic_prefix", "impact": "possible" }
+  ],
+  "mustNotMatch": [
+    { "file": "src/lookalike.ts", "reason": "local class, no provider import" },
+    { "file": "src/ai.ts", "reason": "modern OpenAI SDK call, no seeded event affects it" },
+    { "file": "src/github.ts", "reason": "GitHub SDK in use but the changed endpoint is not called" },
+    { "file": "src/server.ts", "reason": "route path equals a provider path but no provider SDK evidence" },
+    { "file": "src/payments.ts", "symbol": "stripe.paymentIntents.create", "reason": "unaffected Stripe method in the same file" }
+  ]
+}

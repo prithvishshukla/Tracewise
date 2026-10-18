@@ -1,0 +1,41 @@
+{
+  "slug": "stripe",
+  "name": "Stripe",
+  "docsUrl": "https://docs.stripe.com/changelog",
+  "description": "Payments API and official SDKs (stripe-node, stripe-python).",
+  "packages": [
+    { "ecosystem": "npm", "name": "stripe" },
+    { "ecosystem": "pypi", "name": "stripe" }
+  ],
+  "hosts": ["api.stripe.com"],
+  "sdk": {
+    "js": [{ "modules": ["stripe"], "root": "stripe", "factories": ["Stripe"] }],
+    "python": [{ "modules": ["stripe"], "root": "stripe", "factories": ["StripeClient"] }]
+  },
+  "sources": [
+    {
+      "kind": "fixture_events",
+      "url": "fixture:provider-changes/stripe.json",
+      "label": "Simulated Stripe change events (demo data)",
+      "origin": "demo"
+    },
+    {
+      "kind": "openapi",
+      "url": "fixture:provider-changes/openapi/stripe-mini-v2.json",
+      "label": "Simulated mini OpenAPI spec (demo data)",
+      "origin": "demo"
+    },
+    {
+      "kind": "atom",
+      "url": "https://github.com/stripe/stripe-node/releases.atom",
+      "label": "stripe-node releases (GitHub Atom feed)",
+      "origin": "live"
+    },
+    {
+      "kind": "atom",
+      "url": "https://github.com/stripe/stripe-python/releases.atom",
+      "label": "stripe-python releases (GitHub Atom feed)",
+      "origin": "live"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+node_modules/
+.next/
+dist/
+build/
+out/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+*.tsbuildinfo
+next-env.d.ts
+# local data and scanning artifacts
+*.sqlite
+*.db
+pgdata/
+repos/
+uploads/
+tmp/
+.tracewise-tmp/
+tracewise-clone-*/

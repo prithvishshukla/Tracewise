@@ -1,0 +1,21 @@
+{
+  "openapi": "3.0.0",
+  "info": { "title": "Simulated Stripe mini spec (demo data), version 1", "version": "1" },
+  "paths": {
+    "/v1/sources": { "post": { "operationId": "PostSources", "responses": { "200": { "description": "ok" } } } },
+    "/v1/customers": {
+      "get": { "operationId": "GetCustomers", "responses": { "200": { "description": "ok" } } },
+      "post": {
+        "operationId": "PostCustomers",
+        "parameters": [
+          { "name": "name", "in": "query", "required": false },
+          { "name": "payment_method_type", "in": "query", "required": false, "schema": { "type": "string", "enum": ["card", "sepa_debit", "legacy_bank"] } }
+        ],
+        "responses": { "200": { "description": "ok" } }
+      }
+    },
+    "/v1/sources/{source}/mandate_notifications/{mandate_notification}": {
+      "get": { "operationId": "GetSourcesSourceMandateNotificationsMandateNotification", "responses": { "200": { "description": "ok" } } }
+    }
+  }
+}

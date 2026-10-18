@@ -1,0 +1,35 @@
+{
+  "slug": "openai",
+  "name": "OpenAI",
+  "docsUrl": "https://platform.openai.com/docs/changelog",
+  "description": "OpenAI API and official SDKs (openai-node, openai-python).",
+  "packages": [
+    { "ecosystem": "npm", "name": "openai" },
+    { "ecosystem": "pypi", "name": "openai" }
+  ],
+  "hosts": ["api.openai.com"],
+  "sdk": {
+    "js": [{ "modules": ["openai"], "root": "openai", "factories": ["OpenAI", "AzureOpenAI"] }],
+    "python": [{ "modules": ["openai"], "root": "openai", "factories": ["OpenAI", "AsyncOpenAI", "AzureOpenAI"] }]
+  },
+  "sources": [
+    {
+      "kind": "fixture_events",
+      "url": "fixture:provider-changes/openai.json",
+      "label": "Simulated OpenAI change events (demo data)",
+      "origin": "demo"
+    },
+    {
+      "kind": "atom",
+      "url": "https://github.com/openai/openai-node/releases.atom",
+      "label": "openai-node releases (GitHub Atom feed)",
+      "origin": "live"
+    },
+    {
+      "kind": "atom",
+      "url": "https://github.com/openai/openai-python/releases.atom",
+      "label": "openai-python releases (GitHub Atom feed)",
+      "origin": "live"
+    }
+  ]
+}

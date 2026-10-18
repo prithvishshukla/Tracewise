@@ -1,0 +1,47 @@
+{
+  "provider": "openai",
+  "events": [
+    {
+      "key": "openai-python-chatcompletion-removal",
+      "title": "[DEMO] `openai.ChatCompletion.create` removed from the Python SDK",
+      "summary": "SIMULATED EVENT for the Tracewise demo, modelled on the openai-python 1.x migration. The module-level ChatCompletion interface is no longer available; use a client instance and client.chat.completions.create.",
+      "changeType": "breaking",
+      "severity": "high",
+      "publishedAt": "2025-11-01T00:00:00Z",
+      "effectiveAt": "2026-01-01T00:00:00Z",
+      "sourceUrl": "https://example.invalid/tracewise-demo/openai/python-chatcompletion-removal",
+      "affected": [{ "kind": "sdk_symbol", "symbol": "openai.ChatCompletion.create", "ecosystem": "pypi" }],
+      "evidence": [{ "type": "source_quote", "label": "Simulated migration note", "detail": "openai.ChatCompletion.create no longer exists. Use OpenAI().chat.completions.create." }],
+      "remediation": "Instantiate `client = OpenAI()` and call `client.chat.completions.create(...)`. Upgrade the openai package to 1.x and adjust response handling (attribute access instead of dict access).",
+      "confidence": 0.95
+    },
+    {
+      "key": "openai-python-pre-v1-support-end",
+      "title": "[DEMO] openai-python versions below 1.0.0 reach end of support",
+      "summary": "SIMULATED EVENT for the Tracewise demo. Versions of the Python package older than 1.0.0 will no longer receive fixes.",
+      "changeType": "deprecation",
+      "severity": "medium",
+      "publishedAt": "2025-11-01T00:00:00Z",
+      "effectiveAt": "2026-06-01T00:00:00Z",
+      "sourceUrl": "https://example.invalid/tracewise-demo/openai/python-pre-v1-support-end",
+      "affected": [{ "kind": "package_version", "ecosystem": "pypi", "package": "openai", "range": "<1.0.0" }],
+      "evidence": [{ "type": "source_quote", "label": "Simulated support notice", "detail": "openai<1.0.0 is end-of-life." }],
+      "remediation": "Upgrade the `openai` dependency to a 1.x release and re-test. Pin the new version in requirements.txt.",
+      "confidence": 0.9
+    },
+    {
+      "key": "openai-node-completions-create-deprecation",
+      "title": "[DEMO] `openai.completions.create` (legacy text completions) deprecated in the Node SDK",
+      "summary": "SIMULATED EVENT for the Tracewise demo. The legacy completions method is deprecated; use chat completions or the responses API.",
+      "changeType": "deprecation",
+      "severity": "medium",
+      "publishedAt": "2026-08-20T00:00:00Z",
+      "effectiveAt": "2027-02-01T00:00:00Z",
+      "sourceUrl": "https://example.invalid/tracewise-demo/openai/node-completions-deprecation",
+      "affected": [{ "kind": "sdk_symbol", "symbol": "openai.completions.create", "ecosystem": "npm" }],
+      "evidence": [{ "type": "source_quote", "label": "Simulated deprecation notice", "detail": "openai.completions.create is deprecated." }],
+      "remediation": "Move to client.chat.completions.create or the newer API recommended in the provider documentation.",
+      "confidence": 0.9
+    }
+  ]
+}

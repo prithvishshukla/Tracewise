@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+html,
+body {
+  background: #0a0f1e;
+  color: #e8ecff;
+}
+body {
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  -webkit-font-smoothing: antialiased;
+}
+::selection {
+  background: rgba(91, 141, 239, 0.4);
+}
+*:focus-visible {
+  outline: 2px solid #5b8def;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.skeleton {
+  background: linear-gradient(90deg, #151f3d 25%, #1b2850 37%, #151f3d 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+  }
+}

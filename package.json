@@ -1,0 +1,45 @@
+{
+  "name": "tracewise",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Repository-aware API change impact analysis.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n api,worker,web -c blue,magenta,green \"npm run dev -w @tracewise/api\" \"npm run dev -w @tracewise/worker\" \"npm run dev -w @tracewise/web\"",
+    "dev:api": "npm run dev -w @tracewise/api",
+    "dev:worker": "npm run dev -w @tracewise/worker",
+    "dev:web": "npm run dev -w @tracewise/web",
+    "build:web": "npm run build -w @tracewise/web",
+    "db:generate": "npm run generate -w @tracewise/database",
+    "db:migrate": "tsx scripts/db-migrate.ts",
+    "db:seed": "tsx scripts/seed-demo.ts",
+    "db:reset": "tsx scripts/db-reset.ts",
+    "test": "vitest run && npm run test -w @tracewise/web",
+    "test:unit": "vitest run",
+    "test:web": "npm run test -w @tracewise/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "benchmark": "tsx scripts/benchmark.ts",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^22.20.5",
+    "concurrently": "^10.0.6",
+    "eslint": "^9.39.5",
+    "globals": "^17.13.0",
+    "prettier": "^3.9.9",
+    "tsx": "^4.23.15",
+    "typescript": "5.9",
+    "typescript-eslint": "^8.71.1",
+    "vitest": "^3.2.7"
+  }
+}

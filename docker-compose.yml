@@ -1,0 +1,64 @@
+# Local infrastructure for Tracewise.
+#   docker compose up -d            -> PostgreSQL + Redis only (recommended; run the apps with npm)
+#   docker compose --profile app up -d --build  -> also builds and runs api, worker and web in containers
+#       (the app profile is provided as a starting point and was not verified in the authoring environment)
+name: tracewise
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: tracewise # local development only
+      POSTGRES_DB: tracewise
+    ports: ['5432:5432']
+    volumes: ['pgdata:/var/lib/postgresql/data']
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres -d tracewise']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    command: ['redis-server', '--appendonly', 'yes']
+    ports: ['6379:6379']
+    volumes: ['redisdata:/data']
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api: &app
+    profiles: ['app']
+    build: { context: ., dockerfile: infra/docker/Dockerfile }
+    command: ['npm', 'run', 'start', '-w', '@tracewise/api']
+    environment: &appenv
+      DATABASE_URL: postgres://postgres:tracewise@postgres:5432/tracewise
+      REDIS_URL: redis://redis:6379
+      API_HOST: 0.0.0.0
+      API_PORT: '4000'
+      WEB_ORIGIN: http://localhost:3000
+      SCAN_ROOTS: /app/fixtures/sample-repositories:/repos
+    volumes: ['./fixtures:/app/fixtures:ro', './repos:/repos:ro']
+    ports: ['4000:4000']
+    depends_on: { postgres: { condition: service_healthy }, redis: { condition: service_healthy } }
+
+  worker:
+    <<: *app
+    command: ['npm', 'run', 'start', '-w', '@tracewise/worker']
+    environment: *appenv
+    ports: []
+
+  web:
+    <<: *app
+    command: ['npm', 'run', 'start', '-w', '@tracewise/web']
+    environment:
+      API_URL: http://api:4000
+    ports: ['3000:3000']
+    depends_on: [api]
+
+volumes:
+  pgdata:
+  redisdata:

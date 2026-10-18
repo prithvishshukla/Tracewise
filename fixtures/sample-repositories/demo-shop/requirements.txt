@@ -1,0 +1,4 @@
+# Python tooling for the demo shop
+openai==0.28.1
+requests==2.31.0
+stripe==7.9.0

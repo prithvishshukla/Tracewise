@@ -1,0 +1,32 @@
+{
+  "slug": "github",
+  "name": "GitHub",
+  "docsUrl": "https://docs.github.com/en/rest",
+  "description": "GitHub REST API and Octokit SDKs.",
+  "packages": [
+    { "ecosystem": "npm", "name": "@octokit/rest" },
+    { "ecosystem": "npm", "name": "@octokit/core" },
+    { "ecosystem": "npm", "name": "octokit" },
+    { "ecosystem": "pypi", "name": "PyGithub" }
+  ],
+  "hosts": ["api.github.com"],
+  "sdk": {
+    "js": [{ "modules": ["@octokit/rest", "@octokit/core", "octokit"], "root": "octokit", "factories": ["Octokit"] }],
+    "python": [{ "modules": ["github"], "root": "github", "factories": ["Github"] }]
+  },
+  "sources": [
+    {
+      "kind": "fixture_events",
+      "url": "fixture:provider-changes/github.json",
+      "label": "Simulated GitHub change events (demo data)",
+      "origin": "demo"
+    },
+    { "kind": "rss", "url": "https://github.blog/changelog/feed/", "label": "GitHub Changelog (RSS)", "origin": "live" },
+    {
+      "kind": "atom",
+      "url": "https://github.com/octokit/rest.js/releases.atom",
+      "label": "octokit/rest.js releases (GitHub Atom feed)",
+      "origin": "live"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "slug": "twilio",
+  "name": "Twilio",
+  "docsUrl": "https://www.twilio.com/docs/usage/changelog",
+  "description": "Twilio REST API and helper libraries.",
+  "packages": [
+    { "ecosystem": "npm", "name": "twilio" },
+    { "ecosystem": "pypi", "name": "twilio" }
+  ],
+  "hosts": ["api.twilio.com"],
+  "sdk": {
+    "js": [{ "modules": ["twilio"], "root": "twilio", "factories": ["Twilio"] }],
+    "python": [{ "modules": ["twilio"], "root": "twilio", "factories": ["Client", "Twilio"] }]
+  },
+  "sources": [
+    {
+      "kind": "fixture_events",
+      "url": "fixture:provider-changes/twilio.json",
+      "label": "Simulated Twilio change events (demo data)",
+      "origin": "demo"
+    },
+    {
+      "kind": "atom",
+      "url": "https://github.com/twilio/twilio-node/releases.atom",
+      "label": "twilio-node releases (GitHub Atom feed)",
+      "origin": "live"
+    }
+  ]
+}

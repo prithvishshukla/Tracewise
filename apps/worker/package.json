@@ -1,0 +1,19 @@
+{
+  "name": "@tracewise/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts",
+    "start": "tsx src/main.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@tracewise/config": "*",
+    "@tracewise/core": "*",
+    "@tracewise/database": "*",
+    "bullmq": "^5.81.5",
+    "ioredis": "^5.11.1",
+    "pino": "^10.4.0"
+  }
+}

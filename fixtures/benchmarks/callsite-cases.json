@@ -1,0 +1,359 @@
+{
+  "description": "Synthetic, self-authored call-site labels. Not a sample of real-world code; see BENCHMARKS.md for how to interpret results.",
+  "cases": [
+    {
+      "id": "js-default-import",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nconst s = new Stripe('k');\nawait s.charges.create({});",
+      "expected": [
+        "stripe.charges.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-alias-name",
+      "language": "ts",
+      "code": "import S from 'stripe';\nconst c = new S('k');\nc.refunds.create({});",
+      "expected": [
+        "stripe.refunds.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-namespace-import",
+      "language": "ts",
+      "code": "import * as Stripe from 'stripe';\nconst s = new Stripe.default('k');\nconst t = Stripe('k');\nt.customers.list();",
+      "expected": [
+        "stripe.customers.list"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-named-factory",
+      "language": "ts",
+      "code": "import { OpenAI } from 'openai';\nconst o = new OpenAI();\nawait o.chat.completions.create({});",
+      "expected": [
+        "openai.chat.completions.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-require-default",
+      "language": "js",
+      "code": "const twilio = require('twilio');\nconst c = twilio('a','b');\nc.messages.create({});",
+      "expected": [
+        "twilio.messages.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-require-destructure",
+      "language": "js",
+      "code": "const { Octokit } = require('@octokit/rest');\nconst k = new Octokit();\nk.rest.issues.update({});",
+      "expected": [
+        "octokit.rest.issues.update"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-class-property",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nclass B {\n  private stripe = new Stripe('');\n  pay() { return this.stripe.charges.create({}); }\n}",
+      "expected": [
+        "stripe.charges.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-ctor-assignment",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nclass B {\n  stripe: any;\n  constructor() { this.stripe = new Stripe(''); }\n  go() { return this.stripe.invoices.list(); }\n}",
+      "expected": [
+        "stripe.invoices.list"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-di-parameter-property",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nclass B { constructor(private readonly stripe: Stripe) {}\n  go() { return this.stripe.customers.create({}); } }",
+      "expected": [
+        "stripe.customers.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-typed-function-param",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nfunction f(client: Stripe) { return client.charges.create({}); }",
+      "expected": [
+        "stripe.charges.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-optional-chaining",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nconst s = new Stripe('');\ns?.charges?.create({});",
+      "expected": [
+        "stripe.charges.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-element-access-literal",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nconst s = new Stripe('');\ns['charges']['create']({});",
+      "expected": [
+        "stripe.charges.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-multiple-calls",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nconst s = new Stripe('');\ns.charges.create({});\ns.charges.list({});\ns.paymentIntents.create({});",
+      "expected": [
+        "stripe.charges.create",
+        "stripe.charges.list",
+        "stripe.paymentIntents.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-two-providers",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nimport OpenAI from 'openai';\nconst s = new Stripe('');\nconst o = new OpenAI();\ns.charges.create({});\no.chat.completions.create({});",
+      "expected": [
+        "stripe.charges.create",
+        "openai.chat.completions.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-jsx-handler",
+      "language": "tsx",
+      "code": "import Stripe from 'stripe';\nconst s = new Stripe('');\nexport const B = () => <button onClick={() => s.charges.create({})}>x</button>;",
+      "expected": [
+        "stripe.charges.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-octokit-request",
+      "language": "ts",
+      "code": "import { Octokit } from '@octokit/rest';\nconst k = new Octokit();\nk.request('GET /repos/{owner}/{repo}/issues');",
+      "expected": [
+        "octokit.request",
+        "GET /repos/{owner}/{repo}/issues"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-fetch-literal",
+      "language": "ts",
+      "code": "await fetch('https://api.stripe.com/v1/charges', { method: 'POST' });",
+      "expected": [
+        "POST api.stripe.com/v1/charges"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-fetch-const-template",
+      "language": "ts",
+      "code": "const BASE = 'https://api.twilio.com/2010-04-01';\nconst url = `${BASE}/Accounts/${sid}/Messages.json`;\nfetch(url, { method: 'POST' });",
+      "expected": [
+        "POST api.twilio.com/2010-04-01/Accounts/{}/Messages.json"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-axios-get-concat",
+      "language": "ts",
+      "code": "axios.get('https://api.openai.com/v1/models/' + id);",
+      "expected": [
+        "GET api.openai.com/v1/models/{}"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-neg-lookalike-class",
+      "language": "ts",
+      "code": "class Ledger { charges = { create: (x) => x }; }\nconst l = new Ledger();\nl.charges.create({});",
+      "expected": [],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-neg-no-import-same-names",
+      "language": "ts",
+      "code": "const stripe = { charges: { create() {} } };\nstripe.charges.create();",
+      "expected": [],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-neg-unrelated-http",
+      "language": "ts",
+      "code": "await fetch('https://example.com/v1/charges', { method: 'POST' });",
+      "expected": [],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-neg-express-route",
+      "language": "ts",
+      "code": "import express from 'express';\nconst app = express();\napp.get('/v1/charges', h);",
+      "expected": [],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-neg-comment-only",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\n// s.charges.create({}) is deprecated\nconst s = new Stripe('');",
+      "expected": [],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-neg-string-mention",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nconst s = new Stripe('');\nconsole.log('call s.charges.create later');",
+      "expected": [],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "js-neg-import-only",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nexport type S = Stripe;",
+      "expected": [],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "py-module-alias",
+      "language": "py",
+      "code": "import stripe as st\nst.Charge.create(amount=1)",
+      "expected": [
+        "stripe.Charge.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "py-legacy-openai",
+      "language": "py",
+      "code": "import openai\nopenai.ChatCompletion.create(model='x')",
+      "expected": [
+        "openai.ChatCompletion.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "py-client-class",
+      "language": "py",
+      "code": "from openai import OpenAI\nclient = OpenAI()\nclient.chat.completions.create(model='x')",
+      "expected": [
+        "openai.chat.completions.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "py-attr-client",
+      "language": "py",
+      "code": "from twilio.rest import Client\nclass S:\n    def __init__(self):\n        self.tw = Client('a','b')\n    def go(self):\n        self.tw.messages.create(to='1')",
+      "expected": [
+        "twilio.messages.create"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "py-requests-literal",
+      "language": "py",
+      "code": "import requests\nrequests.post('https://api.stripe.com/v1/charges', data={})",
+      "expected": [
+        "POST api.stripe.com/v1/charges"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "py-fstring-url",
+      "language": "py",
+      "code": "import requests\nrequests.get(f'https://api.github.com/repos/{o}/{r}/issues')",
+      "expected": [
+        "GET api.github.com/repos/{}/{}/issues"
+      ],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "py-neg-no-import",
+      "language": "py",
+      "code": "obj.charges.create()\nprint('x')",
+      "expected": [],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "py-neg-commented-url",
+      "language": "py",
+      "code": "# requests.post('https://api.stripe.com/v1/charges')\nx = 1",
+      "expected": [],
+      "note": "",
+      "knownLimitation": false
+    },
+    {
+      "id": "lim-cross-file-wrapper",
+      "language": "ts",
+      "code": "import { stripe } from './stripeClient';\nstripe.charges.create({});",
+      "expected": [
+        "stripe.charges.create"
+      ],
+      "note": "Client created in another file is not traced across files (false negative).",
+      "knownLimitation": true
+    },
+    {
+      "id": "lim-intermediate-alias",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nconst s = new Stripe('');\nconst ch = s.charges;\nch.create({});",
+      "expected": [
+        "stripe.charges.create"
+      ],
+      "note": "Aliasing a sub-resource is not followed (false negative).",
+      "knownLimitation": true
+    },
+    {
+      "id": "lim-name-shadowing",
+      "language": "ts",
+      "code": "import Stripe from 'stripe';\nconst client = new Stripe('');\nfunction other(client: { charges: { create(): void } }) { client.charges.create(); }",
+      "expected": [],
+      "note": "Bindings are file-wide, so a shadowing parameter is mistaken for the SDK client (false positive).",
+      "knownLimitation": true
+    }
+  ]
+}

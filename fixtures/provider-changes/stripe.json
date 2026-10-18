@@ -1,0 +1,48 @@
+{
+  "provider": "stripe",
+  "events": [
+    {
+      "key": "stripe-charges-create-removal",
+      "title": "[DEMO] SDK method `stripe.charges.create` scheduled for removal",
+      "summary": "SIMULATED EVENT for the Tracewise demo, not a real Stripe announcement. The legacy Charges creation method in the Node SDK is announced for removal. Integrations should create payments with PaymentIntents instead.",
+      "changeType": "breaking",
+      "severity": "high",
+      "publishedAt": "2026-09-01T09:00:00Z",
+      "effectiveAt": "2026-12-01T00:00:00Z",
+      "sourceUrl": "https://example.invalid/tracewise-demo/stripe/charges-create-removal",
+      "affected": [{ "kind": "sdk_symbol", "symbol": "stripe.charges.create", "ecosystem": "npm" }],
+      "evidence": [
+        { "type": "source_quote", "label": "Simulated announcement text", "detail": "stripe.charges.create will be removed on 2026-12-01. Use stripe.paymentIntents.create." }
+      ],
+      "remediation": "Replace stripe.charges.create(...) with stripe.paymentIntents.create(...) and confirm the intent with the customer's payment method. Update tests and webhook handlers (charge.* to payment_intent.*).",
+      "confidence": 0.95
+    },
+    {
+      "key": "stripe-post-charges-deprecation",
+      "title": "[DEMO] Endpoint `POST /v1/charges` deprecated",
+      "summary": "SIMULATED EVENT for the Tracewise demo. Direct calls to POST /v1/charges are deprecated in favor of the PaymentIntents API.",
+      "changeType": "deprecation",
+      "severity": "medium",
+      "publishedAt": "2026-09-01T09:05:00Z",
+      "effectiveAt": "2027-03-01T00:00:00Z",
+      "sourceUrl": "https://example.invalid/tracewise-demo/stripe/post-charges-deprecation",
+      "affected": [{ "kind": "endpoint", "method": "POST", "host": "api.stripe.com", "path": "/v1/charges" }],
+      "evidence": [{ "type": "source_quote", "label": "Simulated announcement text", "detail": "POST /v1/charges is deprecated. Use POST /v1/payment_intents." }],
+      "remediation": "Switch raw HTTP calls to POST /v1/payment_intents, or use the official SDK. Review idempotency keys and error handling.",
+      "confidence": 0.9
+    },
+    {
+      "key": "stripe-new-api-version-info",
+      "title": "[DEMO] New API version published (informational)",
+      "summary": "SIMULATED EVENT for the Tracewise demo. A new dated API version is available. No action is required unless you pin versions.",
+      "changeType": "informational",
+      "severity": "info",
+      "publishedAt": "2026-09-10T12:00:00Z",
+      "sourceUrl": "https://example.invalid/tracewise-demo/stripe/new-api-version",
+      "affected": [],
+      "evidence": [{ "type": "note", "label": "Informational event", "detail": "No affected symbols are listed, so no findings are generated." }],
+      "remediation": "Review the upgrade guide when convenient.",
+      "confidence": 0.8
+    }
+  ]
+}

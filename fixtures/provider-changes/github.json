@@ -1,0 +1,18 @@
+{
+  "provider": "github",
+  "events": [
+    {
+      "key": "github-remove-label-endpoint-change",
+      "title": "[DEMO] `DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels` behavior change",
+      "summary": "SIMULATED EVENT for the Tracewise demo. The endpoint that removes all labels from an issue changes its response shape. The demo repository uses the GitHub SDK but does not call this endpoint.",
+      "changeType": "warning",
+      "severity": "low",
+      "publishedAt": "2026-09-12T00:00:00Z",
+      "sourceUrl": "https://example.invalid/tracewise-demo/github/remove-all-labels",
+      "affected": [{ "kind": "endpoint", "method": "DELETE", "host": "api.github.com", "path": "/repos/{owner}/{repo}/issues/{issue_number}/labels" }],
+      "evidence": [{ "type": "source_quote", "label": "Simulated changelog entry", "detail": "Response of DELETE .../labels changes from an array to an empty object." }],
+      "remediation": "Do not rely on the response body of this endpoint.",
+      "confidence": 0.85
+    }
+  ]
+}

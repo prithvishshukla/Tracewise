@@ -1,0 +1,19 @@
+{
+  "provider": "twilio",
+  "events": [
+    {
+      "key": "twilio-messages-feedback-param-deprecation",
+      "title": "[DEMO] `ProvideFeedback` parameter deprecated on POST Messages.json",
+      "summary": "SIMULATED EVENT for the Tracewise demo, not a real Twilio announcement. A parameter of the Messages resource is deprecated; the endpoint itself continues to work.",
+      "changeType": "deprecation",
+      "severity": "medium",
+      "publishedAt": "2026-09-05T00:00:00Z",
+      "effectiveAt": "2027-01-15T00:00:00Z",
+      "sourceUrl": "https://example.invalid/tracewise-demo/twilio/messages-feedback-param",
+      "affected": [{ "kind": "endpoint", "method": "POST", "host": "api.twilio.com", "path": "/2010-04-01/Accounts/{AccountSid}/Messages.json" }],
+      "evidence": [{ "type": "source_quote", "label": "Simulated deprecation notice", "detail": "The ProvideFeedback parameter will be ignored after 2027-01-15." }],
+      "remediation": "Stop sending ProvideFeedback in message-create requests and use the dedicated Feedback resource where available.",
+      "confidence": 0.9
+    }
+  ]
+}

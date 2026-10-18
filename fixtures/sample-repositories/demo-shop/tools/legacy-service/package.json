@@ -1,0 +1,1 @@
+{ "name": "legacy-service", "dependencies": { "stripe": "^8.0.0" 
