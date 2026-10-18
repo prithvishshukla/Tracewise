@@ -137,7 +137,7 @@ npm install
 ## 11. Database setup
 
 ```powershell
-docker compose up -d          # PostgreSQL 16 on :5432 and Redis 7 on :6379
+docker compose up -d          # PostgreSQL 16 on :5433 (mapped to container :5432) and Redis 7 on :6379
 npm run db:migrate            # applies packages/database/drizzle/*.sql
 ```
 
@@ -176,7 +176,7 @@ Or start all three in one terminal: `npm run dev`. Without Redis/worker, set `QU
 | web      | 3000 | Next.js UI; proxies `/api/*` to the API (adds the token) |
 | api      | 4000 | REST API, validation, rate limiting, OpenAPI             |
 | worker   | -    | scans, feed polling, change processing, finding matching |
-| postgres | 5432 | primary database                                         |
+| postgres | 5433 | primary database (mapped to 5432 in container)           |
 | redis    | 6379 | BullMQ queues                                            |
 
 ## 16. Running tests
@@ -189,11 +189,11 @@ npm run typecheck ; npm run lint ; npm run format:check
 npm run benchmark             # measures detection quality and scan throughput
 ```
 
-By default tests use in-process PGlite (no Docker). Set `TEST_DATABASE_URL=postgres://postgres:tracewise@localhost:5432/tracewise_test` to run the suite on real PostgreSQL (each test runtime gets its own temporary database). Queue tests use Redis database 15 (`TEST_REDIS_URL`) and are skipped when Redis is not reachable.
+By default tests use in-process PGlite (no Docker). Set `TEST_DATABASE_URL=postgres://postgres:tracewise@localhost:5433/tracewise_test` to run the suite on real PostgreSQL (each test runtime gets its own temporary database). Queue tests use Redis database 15 (`TEST_REDIS_URL`) and are skipped when Redis is not reachable.
 
 ## 17. Troubleshooting
 
-- **`ECONNREFUSED 5432/6379`**: start the containers (`docker compose up -d`) and check `docker compose ps`.
+- **`ECONNREFUSED 5433/6379`**: start the containers (`docker compose up -d`) and check `docker compose ps`.
 - **No Docker?** Install PostgreSQL 16 for Windows and point `DATABASE_URL` at it; set `QUEUE_MODE=inline` to avoid Redis (or use Memurai/WSL Redis).
 - **"Directory is outside the allowed scan roots"**: add the folder to `SCAN_ROOTS` in `.env` (separator `;` on Windows) and restart the API.
 - **Web shows "Cannot reach the Tracewise API"**: start `npm run dev:api`; check `API_URL`.

@@ -48,7 +48,7 @@ Tracewise is a small set of local processes. After setup (section 3) you reach e
 | REST API                        | http://127.0.0.1:4000              | JSON API used by the web app                                      |
 | **API documentation (Swagger)** | http://127.0.0.1:4000/docs         | Try every endpoint in the browser                                 |
 | Health check                    | http://127.0.0.1:4000/health       | `{"status":"ok", "database":true, "redis":true}` when all is well |
-| PostgreSQL                      | `localhost:5432`, db `tracewise`   | user `postgres`, password `tracewise` (local development only)    |
+| PostgreSQL                      | `localhost:5433`, db `tracewise`   | user `postgres`, password `tracewise` (local development only)    |
 | Redis                           | `localhost:6379`                   | Job queue storage                                                 |
 
 **Who can open it?** Only your own computer. The API listens on `127.0.0.1`, and demo mode has **no login**. Do not expose these ports to a network (see [Modes](#10-modes-and-configuration)).
@@ -82,7 +82,7 @@ npm run dev                     # 6. start API + worker + web
 
 What you should see:
 
-- Step 4 prints `Migrations applied to postgres://postgres:****@127.0.0.1:5432/tracewise`.
+- Step 4 prints `Migrations applied to postgres://postgres:****@127.0.0.1:5433/tracewise`.
 - Step 5 prints `Demo data seeded.` with `open findings: 6 (critical: 1, verified: 4)`.
 - Step 6 prints lines tagged `[api]`, `[worker]` and `[web]`. Wait until the web line says it is ready (first start takes a few seconds).
 
@@ -341,7 +341,7 @@ Important: **production mode is not a complete login system.** It protects the A
 
 | Symptom                                             | Likely cause                                                   | Fix                                                                             |
 | --------------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `ECONNREFUSED 127.0.0.1:5432` / `:6379`             | PostgreSQL or Redis is not running                             | Start Docker Desktop, run `docker compose up -d`, check `docker compose ps`     |
+| `ECONNREFUSED 127.0.0.1:5433` / `:6379`             | PostgreSQL or Redis is not running                             | Start Docker Desktop, run `docker compose up -d`, check `docker compose ps`     |
 | Web page shows "Cannot reach the Tracewise API"     | The API is not running or `API_URL` is wrong                   | Run `npm run dev:api`; open http://127.0.0.1:4000/health                        |
 | Scan stays **queued**                               | The worker is not running                                      | Run `npm run dev:worker` (or use `QUEUE_MODE=inline`)                           |
 | "Could not enqueue the scan job. Is Redis running?" | Redis is down while `QUEUE_MODE=bullmq`                        | Start Redis, or switch to `QUEUE_MODE=inline`                                   |
